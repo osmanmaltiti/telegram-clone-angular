@@ -1,0 +1,69 @@
+<div
+  #divRef
+  class="fixed w-0 h-full bg-[#00000041]"
+  [ngClass]="{ aside: open }"
+  [appClickOutside]="divRef"
+  (close)="onClose()"
+>
+  <aside
+    [ngClass]="{ sidebar: open }"
+    class="w-0 h-full bg-white flex flex-col transition-all overflow-clip"
+  >
+    <div
+      class="p-4 flex flex-col flex-shrink-0 items-start w-full gap-4 border-b border-[#AAAAAA]"
+    >
+      <span class="w-[3rem] h-[3rem] bg-black rounded-full"></span>
+      <div class="flex flex-row flex-shrink-0 w-full items-center">
+        <span class="flex flex-col flex-grow">
+          <p class="font-medium">Maltiti</p>
+          <p class="text-[#AAAAAA]">+233 55 508 7898</p>
+        </span>
+        <button *ngIf="hide" (click)="onShow()">
+          <span class="iconify text-xl" data-icon="ep:arrow-up"></span>
+        </button>
+        <button *ngIf="!hide" (click)="onShow()">
+          <span class="iconify text-xl" data-icon="ep:arrow-down"></span>
+        </button>
+      </div>
+    </div>
+
+    <div
+      [ngClass]="{ hide: hide }"
+      class="flex flex-col h-0 overflow-hidden w-full transition-all"
+    >
+      <button class="flex flex-row items-center gap-2 p-2 hover:bg-[#F1F1F1]">
+        <span class="w-[2rem] h-[2rem] bg-black rounded-full"></span>
+        <p class="font-medium">Maltiti</p>
+      </button>
+      <button class="flex flex-row items-center gap-2 p-2 hover:bg-[#F1F1F1]">
+        <span
+          class="w-[1.4rem] h-[1.4rem] bg-sky-500 grid rounded-full mx-[0.3rem]"
+          ><span
+            class="iconify text-base text-white m-auto"
+            data-icon="fluent:add-24-filled"
+          ></span
+        ></span>
+        <p class="font-medium">Add Account</p>
+      </button>
+    </div>
+
+    <div class="flex flex-col w-full py-2 overflow-y-auto h-full">
+      <button
+        *ngFor="let button of buttons"
+        class="flex flex-row items-center gap-2 p-2 hover:bg-[#F1F1F1]"
+      >
+        <span [class]="button.class">
+          <span
+            class="iconify text-lg m-auto text-white"
+            [appIcons]="button.icon"
+          ></span>
+        </span>
+        <p class="font-medium">{{ button.title }}</p>
+      </button>
+      <span class="flex flex-col mt-auto p-2 text-[#AB9999]">
+        <p>Telegram Desktop Clone</p>
+        <p>Version 1.0.0 x64 - Overhaul</p>
+      </span>
+    </div>
+  </aside>
+</div>

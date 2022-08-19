@@ -5,12 +5,12 @@
 }
 
 .sidebar {
-  width: 240px;
-  animation: slideIn 150ms;
+  width: 250px;
+  animation: slideIn 250ms;
 }
 
 .hide {
-  height: 9rem;
+  height: 6rem;
   padding: 2px 0;
   border-bottom: 1px solid #aaaaaa;
   transition: linear 150ms;

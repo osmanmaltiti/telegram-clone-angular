@@ -1,21 +1,35 @@
-<main class="w-full h-full flex flex-col">
-  <app-sidebar [open]="openAside" (close_sidebar)="toggleAside()"></app-sidebar>
-  <nav
-    class="flex flex-row items-center justify-between p-2 gap-3 w-full h-[3rem]"
-  >
-    <button (click)="toggleAside()">
-      <span
-        class="iconify text-2xl text-gray-400"
-        data-icon="eva:menu-fill"
-      ></span>
-    </button>
-    <label for="search" class="flex-grow">
-      <input
-        type="text"
-        class="w-full bg-[#F1F1F1] p-2 rounded-[3px] focus:ring-2 ring-sky-400 focus:outline-none"
-        placeholder="Search"
-      />
-    </label>
-  </nav>
-  <app-chat-card></app-chat-card>
+<main class="w-full h-full flex flex-row">
+  <div class="w-full flex flex-col lg:w-[30%] lg:shadow lg:z-10">
+    <app-sidebar
+      [open]="openAside"
+      (close_sidebar)="toggleAside()"
+    ></app-sidebar>
+    <nav
+      class="flex flex-row items-center justify-between p-2 gap-3 w-full h-[3.5rem]"
+    >
+      <button (click)="toggleAside()">
+        <span
+          class="iconify text-2xl text-gray-400"
+          data-icon="eva:menu-fill"
+        ></span>
+      </button>
+      <label for="search" class="flex-grow">
+        <input
+          type="text"
+          class="w-full bg-[#F1F1F1] p-2 rounded-[3px] focus:ring-2 ring-sky-400 focus:bg-white focus:outline-none text-sm transition-all"
+          placeholder="Search"
+        />
+      </label>
+    </nav>
+    <app-chat-card
+      *ngFor="let chat of allChatHeads"
+      [chat]="chat"
+      (open-chat)="toggleChat()"
+    ></app-chat-card>
+  </div>
+  <app-chat-area
+    class="flex-grow"
+    [open]="openChat"
+    (close)="toggleChat()"
+  ></app-chat-area>
 </main>

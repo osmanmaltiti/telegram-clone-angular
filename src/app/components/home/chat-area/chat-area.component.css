@@ -1,0 +1,24 @@
+.area {
+  animation: slideAreaIn 250ms;
+  width: 100%;
+  right: 0vw;
+}
+
+@keyframes slideAreaIn {
+  from {
+    right: -100vw;
+  }
+  to {
+    right: 0vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .area {
+    animation: none;
+    width: 100%;
+    -webkit-box-shadow: inset -11px -1px 2.5px -5px #ddd;
+    -moz-box-shadow: inset -11px -1px 2.5px -5px #ddd;
+    box-shadow: inset -11px -1px 2.5px -5px #ddd;
+  }
+}

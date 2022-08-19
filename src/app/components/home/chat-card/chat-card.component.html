@@ -1,15 +1,51 @@
-<button class="w-full flex flex-row p-2 hover:bg-[#F1F1F1]">
-  <span class="w-[3rem] h-[3rem] bg-gray-300 flex-shrink-0 rounded-full"></span>
+<button
+  class="w-full flex flex-row p-2 hover:bg-[#F1F1F1]"
+  (click)="onOpenChat()"
+  [appHighlight]="'#419FD9'"
+  [chat]="chat"
+>
+  <span
+    class="w-[3rem] h-[3rem] bg-gray-300 flex-shrink-0 rounded-full overflow-hidden"
+  >
+    <img
+      src="../../../../assets/joyboy.jpg"
+      class="w-full h-full object-cover"
+    />
+  </span>
   <div class="flex flex-col justify-between w-full h-[3rem] ml-3">
     <div class="w-full flex flex-row justify-between text-sm">
-      <p class="font-medium">Saved Messages</p>
-      <p>7/21/2022</p>
+      <p
+        [appHighlight]="''"
+        [text-color]="'white'"
+        [chat]="chat"
+        class="font-medium"
+      >
+        {{ chat.name }}
+      </p>
+      <p
+        [appHighlight]="''"
+        [text-color]="'white'"
+        [chat]="chat"
+        class="text-gray-400"
+      >
+        {{ chat.createdAt | date: "shortTime" }}
+      </p>
     </div>
 
     <div class="w-full flex flex-row justify-between items-center text-sm">
-      <p class="text-gray-400">Saved Messages</p>
+      <p
+        class="whitespace-nowrap text-ellipsis overflow-hidden max-w-[30ch] text-gray-400"
+        [appHighlight]="''"
+        [text-color]="'white'"
+        [chat]="chat"
+      >
+        {{ chat.last_message }}
+      </p>
       <p
         class="bg-gray-400 w-5 h-5 rounded-full text-center leading-5 text-white font-medium text-xs"
+        [appHighlight]="'white'"
+        [text-color]="'#419FD9'"
+        [chat]="chat"
       >
         2
       </p>

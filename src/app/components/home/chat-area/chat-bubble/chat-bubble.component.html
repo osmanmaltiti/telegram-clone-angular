@@ -1,0 +1,15 @@
+<div
+  class="max-w-[20rem] min-h-[2rem] flex flex-col text-black bg-[#EFFDDE] relative rounded-md px-2 py-1 gap-2 flex-shrink-0 overflow-hidden"
+>
+  <span class="flex-grow font-medium text-sm my-auto">{{ data.message }}</span>
+  <span class="flex flex-row h-full flex-shrink-0 items-end gap-2 ml-auto">
+    <p class="mb-[0.1rem] text-[#9BCD7C]">
+      {{ data.time | date: "shortTime" }}
+    </p>
+    <span
+      class="iconify text-lg mt-auto text-[#9BCD7C]"
+      data-icon="bi:check-all"
+    ></span>
+  </span>
+  <div class="absolute bottom-0 -right-2 h-[0] w-[0] triangle"></div>
+</div>

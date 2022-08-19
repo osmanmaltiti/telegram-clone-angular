@@ -1,0 +1,14 @@
+.focus {
+  background-color: #419fd9;
+  color: white;
+}
+
+.unfocus {
+  background-color: white;
+  color: black;
+}
+
+.noti {
+  background-color: white;
+  color: #419fd9;
+}

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ICurrentChat } from '../store/features/Chat/chat.action';
+import { HomeService, IAllChats } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   openAside: boolean = false;
-  constructor() {}
+  openChat: boolean = false;
+  allChatHeads: Array<ICurrentChat> = [];
+  allChats: Array<IAllChats> = [];
 
-  ngOnInit(): void {}
+  constructor(private homeService: HomeService) {}
+
+  ngOnInit(): void {
+    this.allChatHeads = this.homeService.chatHead;
+    this.allChats = this.homeService.allChats;
+  }
 
   toggleAside() {
     this.openAside = !this.openAside;
+  }
+
+  toggleChat() {
+    this.openChat = !this.openChat;
   }
 }

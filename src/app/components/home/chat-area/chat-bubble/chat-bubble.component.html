@@ -1,15 +1,20 @@
 <div
-  class="max-w-[20rem] min-h-[2rem] flex flex-col text-black bg-[#EFFDDE] relative rounded-md px-2 py-1 gap-2 flex-shrink-0 overflow-hidden"
+  [ngClass]="{ 'push-to-right': data.from === '1' }"
+  class="w-fit min-w-[10rem] max-w-[20rem] min-h-[2rem] flex flex-col text-black bg-white relative rounded-md px-2 py-1 gap-2 flex-shrink-0 lg:ml-10"
 >
   <span class="flex-grow font-medium text-sm my-auto">{{ data.message }}</span>
-  <span class="flex flex-row h-full flex-shrink-0 items-end gap-2 ml-auto">
-    <p class="mb-[0.1rem] text-[#9BCD7C]">
+  <span class="flex flex-row h-full flex-shrink-0 items-end ml-auto">
+    <p class="mb-[0.1rem] text-[#9BCD7C] text-xs">
       {{ data.time | date: "shortTime" }}
     </p>
     <span
+      *ngIf="data.from === '1'"
       class="iconify text-lg mt-auto text-[#9BCD7C]"
       data-icon="bi:check-all"
     ></span>
   </span>
-  <div class="absolute bottom-0 -right-2 h-[0] w-[0] triangle"></div>
+  <!-- <div class="absolute bottom-0 -right-2 h-[0] w-[0] triangle"></div> -->
+  <span
+    class="hidden lg:flex absolute w-[2rem] h-[2rem] rounded-full bg-white z-10 mt-auto mr-1 -left-10 bottom-0"
+  ></span>
 </div>

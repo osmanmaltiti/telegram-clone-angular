@@ -3,3 +3,19 @@
   border-style: solid;
   border-color: transparent transparent transparent #effdde;
 }
+
+.push-to-right {
+  margin-left: auto;
+  background-color: #effdde;
+}
+
+.color-right {
+  color: #9c9c9c;
+}
+
+@media (min-width: 1024px) {
+  .push-to-right {
+    margin-left: 2.5rem;
+    background-color: #effdde;
+  }
+}

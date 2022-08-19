@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 
@@ -8,11 +9,11 @@ import { ChatAreaComponent } from './components/home/chat-area/chat-area.compone
 import { ChatBubbleComponent } from './components/home/chat-area/chat-bubble/chat-bubble.component';
 import { ChatCardComponent } from './components/home/chat-card/chat-card.component';
 import { SidebarComponent } from './components/home/sidebar/sidebar.component';
+import { HighlightDirective } from './directives/home/highlight.directive';
 import { ClickOutsideDirective } from './directives/shared/click-outside.directive';
 import { IconsDirective } from './directives/sidebar/Icons.directive';
 import { HomeComponent } from './home/home.component';
 import store from './store/store';
-import { HighlightDirective } from './directives/home/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,12 @@ import { HighlightDirective } from './directives/home/highlight.directive';
     ChatBubbleComponent,
     HighlightDirective,
   ],
-  imports: [BrowserModule, AppRoutingModule, StoreModule.forRoot(store)],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    StoreModule.forRoot(store),
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

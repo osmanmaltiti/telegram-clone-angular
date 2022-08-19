@@ -12,6 +12,7 @@ import store from 'src/app/store/store';
 export class ChatAreaComponent implements OnInit {
   @Output('close') close: EventEmitter<any> = new EventEmitter();
   @Input('open') open: boolean = false;
+  message: any = '';
 
   initChat = {
     profile: '',

@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { HomeService, IAllChats } from 'src/app/home/home.service';
+import { HomeService, IAllChats } from 'src/app/home/services/home.service';
 import { ICurrentChat, setChatData, setCurrentChat } from './chat.action';
 
 interface IInitialState {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IAllChats } from 'src/app/home/home.service';
+import { IAllChats } from 'src/app/home/services/home.service';
 import { setCurrentChat } from 'src/app/store/features/Chat/chat.action';
 import store from 'src/app/store/store';
 

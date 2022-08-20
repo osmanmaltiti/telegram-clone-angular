@@ -1,7 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { InMemoryCache } from '@apollo/client/core';
 import { StoreModule } from '@ngrx/store';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,8 +36,23 @@ import store from './store/store';
     AppRoutingModule,
     StoreModule.forRoot(store),
     FormsModule,
+    ApolloModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      deps: [HttpLink],
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:5000/graphql',
+          }),
+        };
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

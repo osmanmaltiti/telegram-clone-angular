@@ -4,7 +4,10 @@
 >
   <span class="flex-grow font-medium text-sm my-auto">{{ data.message }}</span>
   <span class="flex flex-row h-full flex-shrink-0 items-end ml-auto">
-    <p class="mb-[0.1rem] text-[#9BCD7C] text-xs">
+    <p
+      [ngClass]="{ 'color-right': data.from !== '1' }"
+      class="mb-[0.1rem] text-[#9BCD7C] text-xs"
+    >
       {{ data.time | date: "shortTime" }}
     </p>
     <span

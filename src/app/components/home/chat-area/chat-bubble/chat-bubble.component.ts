@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IMessages } from 'src/app/store/features/Chat/chat.types';
 
 @Component({
   selector: 'app-chat-bubble',
@@ -6,17 +7,20 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./chat-bubble.component.css'],
 })
 export class ChatBubbleComponent implements OnInit {
-  @Input('data') data: {
-    from: string;
-    time: number;
-    message: string;
-  } = {
+  @Input('data') data: IMessages = {
+    id: '',
+    time: '',
     from: '',
-    time: 0,
     message: '',
+    chatDataId: '',
   };
+
+  thisUser: any;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userdata = JSON.parse(String(localStorage.getItem('userdata')));
+    this.thisUser = userdata.id;
+  }
 }

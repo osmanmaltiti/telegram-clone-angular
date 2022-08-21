@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ICurrentChat } from '../store/features/Chat/chat.action';
-import { HomeService, IAllChats } from './services/home.service';
+import { Store } from '@ngrx/store';
+import { RootState } from 'src/app/store/store';
+import { fetchUsers } from '../store/features/Users/user.action';
+import { IGetUsers } from '../store/features/Users/user.types';
 import { QueryService } from './services/query.service';
 
 @Component({
@@ -12,20 +14,31 @@ import { QueryService } from './services/query.service';
 export class HomeComponent implements OnInit {
   openAside: boolean = false;
   openChat: boolean = false;
-  allChatHeads: Array<ICurrentChat> = [];
-  allChats: Array<IAllChats> = [];
+  allUsers: Array<IGetUsers> = [];
 
-  constructor(private homeService: HomeService, private apollo: QueryService) {}
+  constructor(private apollo: QueryService, private store: Store<RootState>) {}
 
   ngOnInit(): void {
-    this.allChatHeads = this.homeService.chatHead;
-    this.allChats = this.homeService.allChats;
+    this.getUsers();
+    this.getChats();
+  }
+
+  getUsers() {
     this.apollo.watch().valueChanges.subscribe({
       next: ({ loading, data }) => {
-        console.log(data);
+        const { getUsers } = data as unknown as { getUsers: Array<IGetUsers> };
+        this.store.dispatch(fetchUsers({ payload: getUsers }));
       },
       error: (err) => {
         console.log(err);
+      },
+    });
+  }
+
+  getChats() {
+    this.store.select('UserReducer').subscribe({
+      next: (value) => {
+        this.allUsers = value.allUsers;
       },
     });
   }

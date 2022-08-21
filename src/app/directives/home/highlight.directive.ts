@@ -6,11 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  ICurrentChat,
-  setCurrentChat,
-} from 'src/app/store/features/Chat/chat.action';
-import store from 'src/app/store/store';
+import { ICurrentChat } from 'src/app/store/features/Chat/chat.types';
+import { RootState } from './../../store/store';
 
 @Directive({
   selector: '[appHighlight]',
@@ -22,24 +19,16 @@ export class HighlightDirective implements OnInit {
   @HostBinding('style.backgroundColor') style: any;
   @HostBinding('style.color') textColor: any;
 
-  initChat = {
-    profile: '',
-    name: '',
-    last_message: '',
-    createdAt: Date.now(),
-    id: '',
-  };
+  @Input('chat') chat: ICurrentChat | undefined;
 
-  @Input('chat') chat: ICurrentChat = this.initChat;
-  storeChat: ICurrentChat = this.initChat;
+  constructor(private store: Store<RootState>) {}
 
-  constructor(private stores: Store<typeof store>) {}
   ngOnInit(): void {
-    this.stores.select('chatReducer').subscribe({
-      next: (value: any) => {
-        const { currentChat } = value as { currentChat: ICurrentChat };
+    this.store.select('ChatReducer').subscribe({
+      next: (value) => {
+        const { currentChat } = value;
         if (currentChat) {
-          if (currentChat.id !== this.chat.id) {
+          if (currentChat.id !== this.chat?.id) {
             this.style = '';
             this.textColor = '';
           } else {
@@ -51,7 +40,5 @@ export class HighlightDirective implements OnInit {
     });
   }
 
-  @HostListener('click') setFocus(event: Event) {
-    this.stores.dispatch(setCurrentChat({ payload: this.chat }));
-  }
+  @HostListener('click') setFocus(event: Event) {}
 }

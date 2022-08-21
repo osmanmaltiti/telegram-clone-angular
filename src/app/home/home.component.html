@@ -3,6 +3,7 @@
     <app-sidebar
       [open]="openAside"
       (close_sidebar)="toggleAside()"
+      class="z-20"
     ></app-sidebar>
     <nav
       class="flex flex-row items-center justify-between p-2 gap-3 w-full h-[3.5rem]"
@@ -22,8 +23,8 @@
       </label>
     </nav>
     <app-chat-card
-      *ngFor="let chat of allChatHeads"
-      [chat]="chat"
+      *ngFor="let user of allUsers"
+      [user]="user"
       (open-chat)="toggleChat()"
     ></app-chat-card>
   </div>

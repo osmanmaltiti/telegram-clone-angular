@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  ICurrentChat,
-  setChatData,
-} from 'src/app/store/features/Chat/chat.action';
-import store from 'src/app/store/store';
+import { setCurrentChat } from 'src/app/store/features/Chat/chat.action';
+import { ICurrentChat } from 'src/app/store/features/Chat/chat.types';
+import { setReferee } from 'src/app/store/features/Users/user.action';
+import { IGetUsers } from 'src/app/store/features/Users/user.types';
+import { RootState } from 'src/app/store/store';
+import { OpenChat } from './service/mutation.service';
 
 @Component({
   selector: 'app-chat-card',
@@ -13,33 +14,43 @@ import store from 'src/app/store/store';
 })
 export class ChatCardComponent implements OnInit {
   @Output('open-chat') openChat: EventEmitter<any> = new EventEmitter();
-  @Input('chat') chat: ICurrentChat = {
+  @Input('user') user: IGetUsers = {
     profile: '',
-    name: '',
-    last_message: '',
-    createdAt: Date.now(),
+    fullname: '',
     id: '',
+    number: 0,
   };
-  focus: boolean = false;
   storeChat: any;
 
-  constructor(private stores: Store<typeof store>) {}
+  constructor(private store: Store<RootState>, private OpenChat: OpenChat) {}
 
   ngOnInit(): void {
-    this.stores.select('chatReducer').subscribe({
+    this.store.select('ChatReducer').subscribe({
       next: (value: any) => {
         const { currentChat } = value as { currentChat: ICurrentChat };
         if (currentChat) {
-          if (currentChat.id !== this.chat.id) return;
           this.storeChat = currentChat;
-          this.focus = !this.focus;
         }
       },
     });
   }
 
   onOpenChat() {
-    this.stores.dispatch(setChatData({ payload: this.chat.id }));
-    this.openChat.emit();
+    const userdata = JSON.parse(String(localStorage.getItem('userdata')));
+
+    const data = {
+      combinedUserIds: [this.user.id, userdata.id].sort().join(' '),
+      refereeId: this.user.id,
+    };
+
+    this.store.dispatch(setReferee({ payload: this.user }));
+
+    this.OpenChat.mutate({ data }).subscribe({
+      next: ({ loading, data }) => {
+        const { openChat } = data as unknown as { openChat: ICurrentChat };
+        this.store.dispatch(setCurrentChat({ payload: openChat }));
+        this.openChat.emit();
+      },
+    });
   }
 }

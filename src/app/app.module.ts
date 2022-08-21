@@ -17,7 +17,7 @@ import { HighlightDirective } from './directives/home/highlight.directive';
 import { ClickOutsideDirective } from './directives/shared/click-outside.directive';
 import { IconsDirective } from './directives/sidebar/Icons.directive';
 import { HomeComponent } from './home/home.component';
-import store from './store/store';
+import Store from './store/store';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import store from './store/store';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(store),
+    StoreModule.forRoot(Store),
     FormsModule,
     ApolloModule,
     HttpClientModule,

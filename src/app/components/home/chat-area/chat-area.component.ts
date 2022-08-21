@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IAllChats } from 'src/app/home/services/home.service';
-import { setCurrentChat } from 'src/app/store/features/Chat/chat.action';
-import store from 'src/app/store/store';
+import { ICurrentChat } from 'src/app/store/features/Chat/chat.types';
+import { IGetUsers } from 'src/app/store/features/Users/user.types';
+import { RootState } from 'src/app/store/store';
+import { MutationService } from './services/mutation.service';
 
 @Component({
   selector: 'app-chat-area',
@@ -14,36 +15,57 @@ export class ChatAreaComponent implements OnInit {
   @Input('open') open: boolean = false;
   message: any = '';
 
-  initChat = {
-    profile: '',
-    name: '',
-    last_message: '',
-    createdAt: Date.now(),
+  currentUser: IGetUsers = {
     id: '',
+    fullname: '',
+    number: 0,
+    profile: '',
   };
 
-  chatData: IAllChats = {
-    chatWith: '',
-    withId: '',
-    withProfile: '',
+  currentChat: ICurrentChat = {
+    id: '',
+    refereeId: '',
+    combinedUserIds: '',
+    __typename: '',
     data: [],
   };
 
-  constructor(private stores: Store<typeof store>) {}
+  constructor(
+    private store: Store<RootState>,
+    private mutationService: MutationService
+  ) {}
 
   ngOnInit(): void {
-    this.stores.select('chatReducer').subscribe({
-      next: (value: any) => {
-        const { chatData } = value as { chatData: IAllChats };
-        if (chatData) {
-          this.chatData = chatData;
-        }
+    this.store.select('ChatReducer').subscribe({
+      next: (value) => {
+        if (value.currentChat) this.currentChat = value.currentChat;
+      },
+    });
+
+    this.store.select('UserReducer').subscribe({
+      next: (value) => {
+        if (value.referee) this.currentUser = value.referee;
+      },
+    });
+  }
+
+  onSubmit() {
+    const userdata = JSON.parse(String(localStorage.getItem('userdata')));
+
+    const message = {
+      chatId: this.currentChat.id,
+      message: this.message,
+      from: userdata.id,
+    };
+
+    this.mutationService.mutate({ message }).subscribe({
+      next: (value) => {
+        console.log(value);
       },
     });
   }
 
   onClose() {
-    this.stores.dispatch(setCurrentChat({ payload: this.initChat }));
     this.close.emit();
   }
 }

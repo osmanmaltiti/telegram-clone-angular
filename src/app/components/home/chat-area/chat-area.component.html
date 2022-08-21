@@ -1,10 +1,15 @@
 <main
   [ngClass]="{ area: open }"
-  *ngIf="chatData.chatWith !== ''; else nochat"
+  *ngIf="currentChat.id !== ''; else nochat"
   class="-right-[100vw] lg:-right-0 fixed lg:relative w-full h-full flex flex-col justify-between transition-all overflow-hidden bg-white"
 >
+  <img
+    alt=""
+    src="../../../../assets/bg.jpg"
+    class="object-cover top-0 left-0 w-full h-full absolute"
+  />
   <nav
-    class="h-[3.5rem] w-full bg-white shadow flex flex-row px-2 justify-between items-center"
+    class="h-[3.5rem] z-10 w-full bg-white shadow flex flex-row px-2 justify-between items-center flex-shrink-0"
   >
     <span class="flex flex-row items-center gap-2 text-sm font-medium">
       <button (click)="onClose()" class="lg:hidden">
@@ -22,39 +27,37 @@
           class="w-full h-full object-cover"
         />
       </span>
-      <p>{{ chatData.chatWith }}</p>
+      <p>{{ currentUser.fullname }}</p>
     </span>
     <span class="flex flex-row items-center gap-3 text-[#9C9C9C]">
       <span class="iconify text-lg" data-icon="fe:search"></span>
       <span class="iconify text-lg" data-icon="akar-icons:more-vertical"></span>
     </span>
   </nav>
-
   <section
-    class="flex flex-grow flex-col overflow-y-auto p-2 relative bg-red-200"
+    class="flex flex-grow flex-col overflow-y-auto scrollbar-none relative px-2"
   >
-    <img
-      alt=""
-      src="../../../../assets/bg.jpg"
-      class="object-cover top-0 left-0 w-full h-full absolute"
-    />
-    <div *ngFor="let chat of chatData.data" class="w-full flex flex-col gap-2">
+    <span class="w-full h-full overflow-y-auto scrollbar-none">
       <div
-        class="w-fit bg-[#00000036] text-white py-1 px-4 rounded-full mx-auto lg:mx-0 lg:ml-[25%] z-10"
+        *ngFor="let chat of currentChat.data"
+        class="w-full flex flex-col gap-2 mb-2"
       >
-        {{ chat.date | date }}
+        <div
+          class="w-fit bg-[#00000036] text-white py-1 px-4 rounded-full mx-auto lg:mx-0 lg:ml-[25%] z-10"
+        >
+          {{ chat.date | date }}
+        </div>
+        <app-chat-bubble
+          *ngFor="let message of chat.messages"
+          [data]="message"
+          class="h-fit"
+        ></app-chat-bubble>
       </div>
-      <app-chat-bubble
-        *ngFor="let bubble of chat.chats"
-        [data]="bubble"
-        class="h-fit"
-      ></app-chat-bubble>
-    </div>
+    </span>
   </section>
 
   <form
-    #formRef="ngForm"
-    class="absolute bg-white w-full bottom-0 flex flex-row items-end p-2 gap-3"
+    class="bg-white z-10 w-full flex flex-row items-end p-2 gap-3 flex-shrink-0"
   >
     <span
       class="iconify text-2xl text-[#9C9C9C]"
@@ -83,12 +86,12 @@
         ></span>
       </div>
       <ng-template #send>
-        <div>
+        <button (click)="onSubmit()">
           <span
             class="iconify text-2xl text-[#9C9C9C]"
             data-icon="fluent:send-24-filled"
           ></span>
-        </div>
+        </button>
       </ng-template>
     </span>
   </form>

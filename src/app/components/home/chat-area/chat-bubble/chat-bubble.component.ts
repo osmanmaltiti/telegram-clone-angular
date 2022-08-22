@@ -8,11 +8,11 @@ import { IMessages } from 'src/app/store/features/Chat/chat.types';
 })
 export class ChatBubbleComponent implements OnInit {
   @Input('data') data: IMessages = {
-    id: '',
+    chatDataId: '',
+    message: '',
     time: '',
     from: '',
-    message: '',
-    chatDataId: '',
+    id: '',
   };
 
   thisUser: any;

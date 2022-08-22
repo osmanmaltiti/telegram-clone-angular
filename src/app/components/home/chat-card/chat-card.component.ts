@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Socket } from 'ngx-socket-io';
 import { setCurrentChat } from 'src/app/store/features/Chat/chat.action';
 import { ICurrentChat } from 'src/app/store/features/Chat/chat.types';
 import { setReferee } from 'src/app/store/features/Users/user.action';
@@ -14,26 +15,21 @@ import { OpenChat } from './service/mutation.service';
 })
 export class ChatCardComponent implements OnInit {
   @Output('open-chat') openChat: EventEmitter<any> = new EventEmitter();
+
   @Input('user') user: IGetUsers = {
     profile: '',
     fullname: '',
     id: '',
     number: 0,
   };
-  storeChat: any;
 
-  constructor(private store: Store<RootState>, private OpenChat: OpenChat) {}
+  constructor(
+    private store: Store<RootState>,
+    private OpenChat: OpenChat,
+    private socket: Socket
+  ) {}
 
-  ngOnInit(): void {
-    this.store.select('ChatReducer').subscribe({
-      next: (value: any) => {
-        const { currentChat } = value as { currentChat: ICurrentChat };
-        if (currentChat) {
-          this.storeChat = currentChat;
-        }
-      },
-    });
-  }
+  ngOnInit(): void {}
 
   onOpenChat() {
     const userdata = JSON.parse(String(localStorage.getItem('userdata')));
@@ -45,8 +41,10 @@ export class ChatCardComponent implements OnInit {
 
     this.store.dispatch(setReferee({ payload: this.user }));
 
+    this.socket.emit('join-room', data.combinedUserIds);
+
     this.OpenChat.mutate({ data }).subscribe({
-      next: ({ loading, data }) => {
+      next: ({ data }) => {
         const { openChat } = data as unknown as { openChat: ICurrentChat };
         this.store.dispatch(setCurrentChat({ payload: openChat }));
         this.openChat.emit();

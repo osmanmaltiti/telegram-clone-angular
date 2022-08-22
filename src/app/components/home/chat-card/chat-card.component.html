@@ -1,8 +1,8 @@
 <button
   class="w-full flex flex-row p-2 hover:bg-[#F1F1F1]"
-  (click)="onOpenChat()"
   [appHighlight]="'#419FD9'"
-  [chat]="storeChat"
+  [user]="user"
+  (openChat)="onOpenChat()"
 >
   <span
     class="w-[3rem] h-[3rem] bg-gray-300 flex-shrink-0 rounded-full overflow-hidden"
@@ -17,7 +17,7 @@
       <p
         [appHighlight]="''"
         [text-color]="'white'"
-        [chat]="storeChat"
+        [user]="user"
         class="font-medium"
       >
         {{ user.fullname }}
@@ -25,7 +25,7 @@
       <p
         [appHighlight]="''"
         [text-color]="'white'"
-        [chat]="storeChat"
+        [user]="user"
         class="text-gray-400"
       >
         10:00AM
@@ -37,7 +37,7 @@
         class="whitespace-nowrap text-ellipsis overflow-hidden max-w-[30ch] text-gray-400"
         [appHighlight]="''"
         [text-color]="'white'"
-        [chat]="storeChat"
+        [user]="user"
       >
         some random ass text
       </p>
@@ -45,7 +45,7 @@
         class="bg-gray-400 w-5 h-5 rounded-full text-center leading-5 text-white font-medium text-xs"
         [appHighlight]="'white'"
         [text-color]="'#419FD9'"
-        [chat]="storeChat"
+        [user]="user"
       >
         2
       </p>

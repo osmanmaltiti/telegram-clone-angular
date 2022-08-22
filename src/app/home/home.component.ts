@@ -50,4 +50,9 @@ export class HomeComponent implements OnInit {
   toggleChat() {
     this.openChat = !this.openChat;
   }
+
+  onUpdateChat() {
+    this.getUsers();
+    this.getChats();
+  }
 }

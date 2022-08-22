@@ -7,15 +7,6 @@ export class MutationService extends Mutation {
     mutation Mutation($message: MessageData!) {
       createMessage(message: $message) {
         id
-        chatId
-        date
-        messages {
-          id
-          chatDataId
-          from
-          time
-          message
-        }
       }
     }
   `;

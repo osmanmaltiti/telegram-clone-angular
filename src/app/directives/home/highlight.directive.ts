@@ -1,12 +1,14 @@
 import {
   Directive,
+  EventEmitter,
   HostBinding,
   HostListener,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ICurrentChat } from 'src/app/store/features/Chat/chat.types';
+import { IGetUsers } from 'src/app/store/features/Users/user.types';
 import { RootState } from './../../store/store';
 
 @Directive({
@@ -19,16 +21,26 @@ export class HighlightDirective implements OnInit {
   @HostBinding('style.backgroundColor') style: any;
   @HostBinding('style.color') textColor: any;
 
-  @Input('chat') chat: ICurrentChat | undefined;
+  @Input('user') user: IGetUsers | undefined;
+  @Output('openChat') openChat: EventEmitter<any> = new EventEmitter();
 
   constructor(private store: Store<RootState>) {}
 
   ngOnInit(): void {
-    this.store.select('ChatReducer').subscribe({
+    this.onFocus();
+  }
+
+  @HostListener('click') setFocus(event: Event) {
+    this.openChat.emit();
+    this.onFocus();
+  }
+
+  onFocus() {
+    this.store.select('UserReducer').subscribe({
       next: (value) => {
-        const { currentChat } = value;
-        if (currentChat) {
-          if (currentChat.id !== this.chat?.id) {
+        const { referee } = value;
+        if (referee) {
+          if (referee.id !== this.user?.id) {
             this.style = '';
             this.textColor = '';
           } else {
@@ -39,6 +51,4 @@ export class HighlightDirective implements OnInit {
       },
     });
   }
-
-  @HostListener('click') setFocus(event: Event) {}
 }

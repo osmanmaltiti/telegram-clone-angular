@@ -12,18 +12,26 @@
     </p>
   </div>
   <form class="flex flex-col w-[300px] gap-4">
-    <label class="w-full relative">
-      <select class="w-full py-2 rounded-md ring-1 text-lg ring-gray-400">
+    <label class="w-full relative group">
+      <select
+        class="w-full py-2 rounded-md ring-1 text-lg ring-gray-400 group-hover:ring-[#6A52DA] hover:outline-none"
+      >
         <option>Ghana</option>
       </select>
-      <p class="absolute -top-2 bg-white left-2 px-1 text-gray-400">Country</p>
+      <p
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA]"
+      >
+        Country
+      </p>
     </label>
-    <label class="w-full relative">
+    <label class="w-full relative group">
       <input
-        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1"
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA]"
         placeholder="+233 -- --- ----"
       />
-      <p class="absolute -top-2 bg-white left-2 px-1 text-gray-400">
+      <p
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA]"
+      >
         Phone Number
       </p>
     </label>

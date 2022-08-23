@@ -47,8 +47,9 @@ export class ChatCardComponent implements OnInit {
       next: ({ data }) => {
         const { openChat } = data as unknown as { openChat: ICurrentChat };
         this.store.dispatch(setCurrentChat({ payload: openChat }));
-        this.openChat.emit();
       },
     });
+
+    this.openChat.emit();
   }
 }

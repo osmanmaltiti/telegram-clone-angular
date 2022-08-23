@@ -15,11 +15,15 @@ import { ChatBubbleComponent } from './components/home/chat-area/chat-bubble/cha
 import { ChatCardComponent } from './components/home/chat-card/chat-card.component';
 import { SidebarComponent } from './components/home/sidebar/sidebar.component';
 import { HighlightDirective } from './directives/home/highlight.directive';
+import { ScrollBottomDirective } from './directives/home/scrollToBottom.directive';
 import { ClickOutsideDirective } from './directives/shared/click-outside.directive';
 import { IconsDirective } from './directives/sidebar/Icons.directive';
 import { HomeComponent } from './home/home.component';
 import { DateTransformPipe } from './pipes/date.pipe';
 import Store from './store/store';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthComponent } from './auth/auth.component';
 
 const config: SocketIoConfig = {
   url: 'http://localhost:5000',
@@ -40,6 +44,10 @@ const config: SocketIoConfig = {
     ChatBubbleComponent,
     HighlightDirective,
     DateTransformPipe,
+    ScrollBottomDirective,
+    LoginComponent,
+    SignupComponent,
+    AuthComponent,
   ],
   imports: [
     FormsModule,

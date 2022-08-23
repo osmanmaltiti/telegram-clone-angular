@@ -37,7 +37,11 @@
   <section
     class="flex flex-grow flex-col overflow-y-auto scrollbar-none relative px-2"
   >
-    <span class="w-full h-full overflow-y-auto scrollbar-none">
+    <div
+      #chatarea
+      class="w-full h-full overflow-y-auto scrollbar-none"
+      [scrollTop]="chatarea.scrollHeight"
+    >
       <div
         *ngFor="let chat of currentChat.data"
         class="w-full flex flex-col gap-2 mb-2"
@@ -53,7 +57,7 @@
           class="h-fit"
         ></app-chat-bubble>
       </div>
-    </span>
+    </div>
   </section>
 
   <footer

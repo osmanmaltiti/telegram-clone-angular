@@ -1,21 +1,30 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
 import { ICurrentChat } from 'src/app/store/features/Chat/chat.types';
+import { setReferee } from 'src/app/store/features/Users/user.action';
 import { IGetUsers } from 'src/app/store/features/Users/user.types';
 import { RootState } from 'src/app/store/store';
 import { MutationService } from './services/mutation.service';
-import { ChatQuery } from './services/query.service';
 
 @Component({
   selector: 'app-chat-area',
   templateUrl: './chat-area.component.html',
   styleUrls: ['./chat-area.component.css'],
 })
-export class ChatAreaComponent implements OnInit {
+export class ChatAreaComponent implements OnInit, OnChanges {
   @Output('updateChat') updateChat: EventEmitter<any> = new EventEmitter();
   @Output('close') close: EventEmitter<any> = new EventEmitter();
   @Input('open') open: boolean = false;
+
   message: any = '';
 
   currentUser: IGetUsers = {
@@ -36,9 +45,10 @@ export class ChatAreaComponent implements OnInit {
   constructor(
     private socket: Socket,
     private store: Store<RootState>,
-    private queryService: ChatQuery,
     private mutationService: MutationService
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     this.store.select('ChatReducer').subscribe({
@@ -54,11 +64,11 @@ export class ChatAreaComponent implements OnInit {
     });
 
     this.socket.fromEvent('update').subscribe({
-      next: () => this.onGetChat(this.currentChat.combinedUserIds),
+      next: (value: any) => (this.currentChat = value),
     });
 
     this.socket.fromEvent('broadcast_update').subscribe({
-      next: () => this.onGetChat(this.currentChat.combinedUserIds),
+      next: (value: any) => (this.currentChat = value),
     });
   }
 
@@ -66,29 +76,21 @@ export class ChatAreaComponent implements OnInit {
     const userdata = JSON.parse(String(localStorage.getItem('userdata')));
 
     const message = {
-      chatId: this.currentChat.id,
-      message: this.message,
       from: userdata.id,
+      message: this.message,
+      chatId: this.currentChat.id,
       combinedUserIds: this.currentChat.combinedUserIds,
     };
 
     this.mutationService.mutate({ message }).subscribe({
-      next: (value) => {},
+      next: () => {},
     });
+
+    this.message = '';
   }
 
   onClose() {
+    this.store.dispatch(setReferee({ payload: null }));
     this.close.emit();
-  }
-
-  onGetChat(id: any) {
-    this.queryService.watch({ id }).valueChanges.subscribe({
-      next: ({ data }) => {
-        const { getChat } = data as unknown as {
-          getChat: ICurrentChat;
-        };
-        this.currentChat = getChat;
-      },
-    });
   }
 }

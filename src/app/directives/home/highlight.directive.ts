@@ -47,6 +47,9 @@ export class HighlightDirective implements OnInit {
             this.style = this.color;
             this.textColor = this.textcolor;
           }
+        } else {
+          this.style = '';
+          this.textColor = '';
         }
       },
     });

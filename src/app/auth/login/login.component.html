@@ -1,0 +1,38 @@
+<main class="w-full h-full items-center flex flex-col justify-center">
+  <div class="flex flex-col items-center mb-6 gap-1">
+    <div class="w-[10rem] h-[10rem] rounded-full mb-4 grid place-items-center">
+      <span
+        class="iconify h-[95%] w-[95%] text-[#6A52DA]"
+        data-icon="simple-icons:telegram"
+      ></span>
+    </div>
+    <h2 class="text-lg font-semibold">Sign in to Telegram Clone</h2>
+    <p class="w-[30ch] text-center">
+      Please confim your country and enter your phone number.
+    </p>
+  </div>
+  <form class="flex flex-col w-[300px] gap-4">
+    <label class="w-full relative">
+      <select class="w-full py-2 rounded-md ring-1 text-lg ring-gray-400">
+        <option>Ghana</option>
+      </select>
+      <p class="absolute -top-2 bg-white left-2 px-1 text-gray-400">Country</p>
+    </label>
+    <label class="w-full relative">
+      <input
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1"
+        placeholder="+233 -- --- ----"
+      />
+      <p class="absolute -top-2 bg-white left-2 px-1 text-gray-400">
+        Phone Number
+      </p>
+    </label>
+    <label class="flex flex-row gap-2 items-center">
+      <input type="checkbox" />
+      <p>Keep me signed in</p>
+    </label>
+    <button class="w-full py-2 bg-[#6A52DA] text-white rounded-md text-lg">
+      Next
+    </button>
+  </form>
+</main>

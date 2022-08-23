@@ -8,5 +8,5 @@ export const fetchUsers = createAction(
 
 export const setReferee = createAction(
   'SET_REFREE',
-  props<{ payload: IGetUsers }>()
+  props<{ payload: IGetUsers | null }>()
 );

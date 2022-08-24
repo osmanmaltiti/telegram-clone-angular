@@ -1,3 +1,11 @@
+export interface ICreateUser {
+  id?: string;
+  number: number;
+  profile: string;
+  fullname: string;
+  __typename: string;
+}
+
 export interface IGetUsers {
   id: string;
   fullname: string;
@@ -9,4 +17,5 @@ export interface IGetUsers {
 export interface IInitialState {
   allUsers: Array<IGetUsers>;
   referee: IGetUsers | null;
+  user: ICreateUser | null;
 }

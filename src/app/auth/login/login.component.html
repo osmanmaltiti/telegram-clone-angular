@@ -13,33 +13,41 @@
   </div>
   <form class="flex flex-col w-[300px] gap-4">
     <label class="w-full relative group">
-      <select
-        class="w-full py-2 rounded-md ring-1 text-lg ring-gray-400 group-hover:ring-[#6A52DA] hover:outline-none"
-      >
-        <option>Ghana</option>
-      </select>
+      <input
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA] focus:outline-[#6A52DA]"
+        placeholder="+233 -- --- ----"
+        [(ngModel)]="number"
+        name="number"
+        type="tel"
+      />
       <p
-        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA]"
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA] group-focus:text-[#6A52DA]"
       >
-        Country
+        Phone Number
       </p>
     </label>
     <label class="w-full relative group">
       <input
-        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA]"
-        placeholder="+233 -- --- ----"
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA] focus:outline-[#6A52DA]"
+        placeholder="**********"
+        [(ngModel)]="password"
+        name="password"
+        type="password"
       />
       <p
-        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA]"
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA] group-focus:text-[#6A52DA]"
       >
-        Phone Number
+        Password
       </p>
     </label>
     <label class="flex flex-row gap-2 items-center">
       <input type="checkbox" />
       <p>Keep me signed in</p>
     </label>
-    <button class="w-full py-2 bg-[#6A52DA] text-white rounded-md text-lg">
+    <button
+      (click)="onSubmit()"
+      class="w-full py-2 bg-[#6A52DA] text-white rounded-md text-lg"
+    >
       Next
     </button>
   </form>

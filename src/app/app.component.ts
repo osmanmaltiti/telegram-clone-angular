@@ -8,7 +8,14 @@ import { Socket } from 'ngx-socket-io';
 })
 export class AppComponent implements OnInit {
   constructor(private socket: Socket) {}
+
   ngOnInit(): void {
     this.socket.connect();
+
+    this.socket.fromEvent('connected').subscribe({
+      next: (value) => {
+        localStorage.setItem('socketId', String(value));
+      },
+    });
   }
 }

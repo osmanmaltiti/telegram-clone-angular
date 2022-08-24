@@ -1,4 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Socket } from 'ngx-socket-io';
+import { ICreateUser } from 'src/app/store/features/Users/user.types';
+import { RootState } from 'src/app/store/store';
 import { IIcons, SiderbarService } from './sidebar.service';
 
 @Component({
@@ -7,14 +12,26 @@ import { IIcons, SiderbarService } from './sidebar.service';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  buttons: Array<IIcons> | undefined;
-  hide: boolean = false;
-  @Input('open') open: boolean = false;
   @Output('close_sidebar') close: EventEmitter<any> = new EventEmitter();
+  @Input('open') open: boolean = false;
 
-  constructor(private siderbarService: SiderbarService) {}
+  buttons: Array<IIcons> | undefined;
+  user: ICreateUser | null | undefined;
+  hide: boolean = false;
+  url: string = 'http://localhost:5000/';
+
+  constructor(
+    private siderbarService: SiderbarService,
+    private store: Store<RootState>,
+    private router: Router,
+    private socket: Socket
+  ) {}
 
   ngOnInit(): void {
+    this.store.select('UserReducer').subscribe({
+      next: (value) => (this.user = value.user),
+    });
+
     this.buttons = this.siderbarService.button;
   }
 
@@ -24,5 +41,12 @@ export class SidebarComponent implements OnInit {
 
   onClose() {
     this.close.emit();
+  }
+
+  logOut() {
+    this.router.navigate(['/auth']);
+    localStorage.removeItem('id');
+    localStorage.removeItem('socketId');
+    this.socket.emit('disconnected');
   }
 }

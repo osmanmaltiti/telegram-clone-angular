@@ -26,6 +26,7 @@ export class ChatAreaComponent implements OnInit, OnChanges {
   @Input('open') open: boolean = false;
 
   message: any = '';
+  url: string = 'http://localhost:5000/';
 
   currentUser: IGetUsers = {
     id: '',

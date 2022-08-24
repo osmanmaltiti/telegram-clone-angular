@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState } from 'src/app/store/store';
-import { fetchUsers } from '../store/features/Users/user.action';
-import { IGetUsers } from '../store/features/Users/user.types';
+import { fetchUsers, setUser } from '../store/features/Users/user.action';
+import { ICreateUser, IGetUsers } from '../store/features/Users/user.types';
 import { QueryService } from './services/query.service';
 
 @Component({
@@ -24,10 +24,16 @@ export class HomeComponent implements OnInit {
   }
 
   getUsers() {
-    this.apollo.watch().valueChanges.subscribe({
+    const id = String(localStorage.getItem('id'));
+
+    this.apollo.watch({ id }).valueChanges.subscribe({
       next: ({ loading, data }) => {
-        const { getUsers } = data as unknown as { getUsers: Array<IGetUsers> };
+        const { getUsers, user } = data as unknown as {
+          getUsers: Array<IGetUsers>;
+          user: ICreateUser;
+        };
         this.store.dispatch(fetchUsers({ payload: getUsers }));
+        this.store.dispatch(setUser({ payload: user }));
       },
       error: (err) => {
         console.log(err);

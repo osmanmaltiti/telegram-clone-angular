@@ -15,14 +15,14 @@
       <span class="w-[3rem] h-[3rem] overflow-hidden rounded-full">
         <img
           alt=""
-          src="../../../../assets/joyboy.jpg"
+          [src]="user ? url + user.profile : ''"
           class="w-full h-full object-cover"
         />
       </span>
       <div class="flex flex-row flex-shrink-0 w-full items-center">
         <span class="flex flex-col flex-grow">
-          <p class="font-medium">Maltiti</p>
-          <p class="text-[#AAAAAA]">+233 55 508 7898</p>
+          <p class="font-medium">{{ user?.fullname }}</p>
+          <p class="text-[#AAAAAA]">+233{{ user?.number }}</p>
         </span>
         <button *ngIf="hide" (click)="onShow()">
           <span class="iconify text-xl" data-icon="ep:arrow-up"></span>
@@ -38,8 +38,14 @@
       class="flex flex-col h-0 overflow-hidden w-[250px] flex-shrink-0 transition-all"
     >
       <button class="flex flex-row items-center gap-2 p-2 hover:bg-[#F1F1F1]">
-        <span class="w-[2rem] h-[2rem] bg-black rounded-full"></span>
-        <p class="font-medium">Maltiti</p>
+        <span class="w-[2rem] h-[2rem] rounded-full overflow-hidden">
+          <img
+            alt=""
+            [src]="user ? url + user.profile : ''"
+            class="w-full h-full object-cover"
+          />
+        </span>
+        <p class="font-medium">{{ user?.fullname }}</p>
       </button>
       <button class="flex flex-row items-center gap-2 p-2 hover:bg-[#F1F1F1]">
         <span
@@ -50,6 +56,19 @@
           ></span
         ></span>
         <p class="font-medium">Add Account</p>
+      </button>
+      <button
+        (click)="logOut()"
+        class="flex flex-row items-center gap-2 p-2 hover:bg-[#F1F1F1]"
+      >
+        <span
+          class="w-[1.4rem] h-[1.4rem] bg-red-500 grid rounded-full mx-[0.3rem]"
+          ><span
+            class="iconify text-base text-white m-auto"
+            data-icon="akar-icons:minus"
+          ></span
+        ></span>
+        <p class="font-medium">Log Out</p>
       </button>
     </div>
 

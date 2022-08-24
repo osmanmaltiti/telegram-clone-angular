@@ -23,6 +23,8 @@ export class ChatCardComponent implements OnInit {
     number: 0,
   };
 
+  url: string = 'http://localhost:5000/';
+
   constructor(
     private store: Store<RootState>,
     private OpenChat: OpenChat,
@@ -43,13 +45,13 @@ export class ChatCardComponent implements OnInit {
 
     this.socket.emit('join-room', data.combinedUserIds);
 
+    this.openChat.emit();
+
     this.OpenChat.mutate({ data }).subscribe({
       next: ({ data }) => {
         const { openChat } = data as unknown as { openChat: ICurrentChat };
         this.store.dispatch(setCurrentChat({ payload: openChat }));
       },
     });
-
-    this.openChat.emit();
   }
 }

@@ -10,6 +10,9 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { ChatAreaComponent } from './components/home/chat-area/chat-area.component';
 import { ChatBubbleComponent } from './components/home/chat-area/chat-bubble/chat-bubble.component';
 import { ChatCardComponent } from './components/home/chat-card/chat-card.component';
@@ -20,10 +23,8 @@ import { ClickOutsideDirective } from './directives/shared/click-outside.directi
 import { IconsDirective } from './directives/sidebar/Icons.directive';
 import { HomeComponent } from './home/home.component';
 import { DateTransformPipe } from './pipes/date.pipe';
+import { SafeUrlPipe } from './pipes/image.pipe';
 import Store from './store/store';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { AuthComponent } from './auth/auth.component';
 
 const config: SocketIoConfig = {
   url: 'http://localhost:5000',
@@ -48,6 +49,7 @@ const config: SocketIoConfig = {
     LoginComponent,
     SignupComponent,
     AuthComponent,
+    SafeUrlPipe,
   ],
   imports: [
     FormsModule,

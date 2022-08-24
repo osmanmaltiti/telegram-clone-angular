@@ -1,1 +1,83 @@
-<p>signup works!</p>
+<main class="w-full h-full items-center flex flex-col justify-center">
+  <div class="flex flex-col items-center mb-6 gap-1">
+    <div
+      class="w-[10rem] h-[10rem] rounded-full overflow-hidden mb-4 grid place-items-center relative"
+    >
+      <div *ngIf="!imageUrl; else defaultIcon" class="h-[95%] w-[95%]">
+        <span
+          class="iconify h-full w-full text-[#6A52DA]"
+          data-icon="bi:person-circle"
+        ></span>
+      </div>
+      <ng-template #defaultIcon>
+        <img
+          [src]="imageUrl | safeResourceUrl"
+          class="w-full h-full object-cover border-4 border-[#6A52DA] rounded-full"
+        />
+      </ng-template>
+      <label
+        for="pfp"
+        class="bg-sky-400 w-[2rem] h-[2rem] rounded-full grid place-items-center absolute bottom-2"
+      >
+        <input type="file" id="pfp" class="" #pfp (change)="onChange($event)" />
+        <span
+          class="iconify h-[95%] w-[95%] text-white hover:cursor-pointer"
+          data-icon="carbon:add"
+        ></span>
+      </label>
+    </div>
+    <h2 class="text-lg font-semibold">Sign up to Telegram Clone</h2>
+    <p class="w-[30ch] text-center">
+      Please confim your country and enter your phone number.
+    </p>
+  </div>
+  <form class="flex flex-col w-[300px] gap-4">
+    <label class="w-full relative group">
+      <input
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA] focus:outline-[#6A52DA]"
+        placeholder="Full name"
+        [(ngModel)]="fullname"
+        name="fullname"
+      />
+      <p
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA] group-focus:text-[#6A52DA]"
+      >
+        Name
+      </p>
+    </label>
+    <label class="w-full relative group">
+      <input
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA] focus:outline-[#6A52DA]"
+        placeholder="+233 -- --- ----"
+        [(ngModel)]="number"
+        name="number"
+        type="tel"
+      />
+      <p
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA] group-focus:text-[#6A52DA]"
+      >
+        Phone Number
+      </p>
+    </label>
+    <label class="w-full relative group">
+      <input
+        class="w-full py-2 ring-1 text-lg ring-gray-400 rounded-md px-1 group-hover:ring-[#6A52DA] focus:outline-[#6A52DA]"
+        placeholder="********"
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+      />
+      <p
+        class="absolute -top-2 bg-white left-2 px-1 text-gray-400 group-hover:text-[#6A52DA] group-focus:text-[#6A52DA]"
+      >
+        Password
+      </p>
+    </label>
+    <button
+      (click)="onSubmit()"
+      class="w-full py-2 bg-[#6A52DA] text-white rounded-md text-lg"
+    >
+      Next
+    </button>
+  </form>
+</main>

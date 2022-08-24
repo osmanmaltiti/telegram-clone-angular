@@ -7,6 +7,7 @@ import { IMessages } from 'src/app/store/features/Chat/chat.types';
   styleUrls: ['./chat-bubble.component.css'],
 })
 export class ChatBubbleComponent implements OnInit {
+  @Input('refereePfp') refereePfp: any;
   @Input('data') data: IMessages = {
     chatDataId: '',
     message: '',
@@ -15,6 +16,7 @@ export class ChatBubbleComponent implements OnInit {
     id: '',
   };
 
+  url: string = 'http://localhost:5000/';
   thisUser: any;
 
   constructor() {}

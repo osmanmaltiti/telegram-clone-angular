@@ -19,11 +19,11 @@
         ></span>
       </button>
       <span
-        class="h-[2.5rem] w-[2.5rem] lg:hidden rounded-full bg-sky-400 grid"
+        class="h-[2.5rem] w-[2.5rem] lg:hidden rounded-full bg-sky-400 grid overflow-hidden"
       >
         <img
           alt=""
-          src="../../../../assets/joyboy.jpg"
+          [src]="url + currentUser.profile"
           class="w-full h-full object-cover"
         />
       </span>
@@ -54,6 +54,7 @@
         <app-chat-bubble
           *ngFor="let message of chat.messages"
           [data]="message"
+          [refereePfp]="currentUser.profile"
           class="h-fit"
         ></app-chat-bubble>
       </div>

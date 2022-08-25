@@ -110,8 +110,9 @@
   </footer>
   <app-file-upload
     [openFileDialog]="openFileUploadDialog"
-    [file]="file"
     (cancelUpload)="onCancelUpload()"
+    [chat]="currentChat"
+    [file]="file"
   ></app-file-upload>
 </main>
 <ng-template #nochat>

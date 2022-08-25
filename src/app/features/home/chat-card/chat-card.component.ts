@@ -23,7 +23,7 @@ export class ChatCardComponent implements OnInit {
     number: 0,
   };
 
-  url: string = 'http://localhost:5000/';
+  url: string = 'http://localhost:5000/profile/';
 
   constructor(
     private store: Store<RootState>,

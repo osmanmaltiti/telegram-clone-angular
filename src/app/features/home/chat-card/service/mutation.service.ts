@@ -17,6 +17,7 @@ export class OpenChat extends Mutation {
             id
             from
             time
+            file
             message
             chatDataId
           }

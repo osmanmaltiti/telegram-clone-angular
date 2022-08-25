@@ -2,6 +2,12 @@
   [ngClass]="{ 'push-to-right': thisUser === data.from }"
   class="w-fit min-w-[10rem] max-w-[20rem] min-h-[2rem] flex flex-col text-black bg-white relative rounded-md px-2 py-1 gap-2 flex-shrink-0 lg:ml-10"
 >
+  <img
+    alt=""
+    *ngIf="data.file"
+    [src]="postUrl + data.file"
+    class="max-w-[15rem] object-contain rounded-md mt-1"
+  />
   <span class="flex-grow font-medium text-sm my-auto">{{ data.message }}</span>
   <span class="flex flex-row h-full flex-shrink-0 items-end ml-auto">
     <p
@@ -19,6 +25,14 @@
   <span
     class="hidden lg:flex absolute w-[2rem] h-[2rem] overflow-hidden rounded-full z-10 mt-auto mr-1 -left-10 bottom-0"
   >
-    <img alt="" [src]="url + refereePfp" class="w-full h-full object-cover"
-  /></span>
+    <img
+      *ngIf="thisUser === data.from; else referee"
+      alt=""
+      [src]="url + userPfp"
+      class="w-full h-full object-cover"
+    />
+    <ng-template #referee>
+      <img alt="" [src]="url + refereePfp" class="w-full h-full object-cover" />
+    </ng-template>
+  </span>
 </div>

@@ -1,24 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
-export class SignupService {
+@Injectable({
+  providedIn: 'root',
+})
+export class UploadService {
   constructor(private http: HttpClient) {}
 
-  onUploadImage(profile: any) {
-    const socketId = String(localStorage.getItem('socketId'));
+  onUpload(file: any) {
+    const id = String(localStorage.getItem('id'));
 
     const formdata = new FormData();
-    formdata.append('image', profile);
+    formdata.append('image', file);
 
     return this.http.post<{ status: string; data: string }>(
       'http://localhost:5000/upload',
       formdata,
       {
-        headers: new HttpHeaders({
-          id: socketId,
-          type: 'profile',
-        }),
+        headers: new HttpHeaders({ type: 'post' }),
       }
     );
   }

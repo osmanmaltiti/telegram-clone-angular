@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { IMessages } from 'src/app/store/features/Chat/chat.types';
+import { RootState } from 'src/app/store/store';
 
 @Component({
   selector: 'app-chat-bubble',
@@ -11,18 +13,26 @@ export class ChatBubbleComponent implements OnInit {
   @Input('data') data: IMessages = {
     chatDataId: '',
     message: '',
+    file: '',
     time: '',
     from: '',
     id: '',
   };
 
-  url: string = 'http://localhost:5000/';
+  postUrl: string = 'http://localhost:5000/posts/';
+  url: string = 'http://localhost:5000/profile/';
   thisUser: any;
+  userPfp: string = '';
 
-  constructor() {}
+  constructor(private store: Store<RootState>) {}
 
   ngOnInit(): void {
-    const userdata = JSON.parse(String(localStorage.getItem('userdata')));
-    this.thisUser = userdata.id;
+    const id = String(localStorage.getItem('id'));
+    this.thisUser = id;
+    this.store.select('UserReducer').subscribe({
+      next: ({ user }) => {
+        user && (this.userPfp = user.profile);
+      },
+    });
   }
 }

@@ -28,7 +28,7 @@ export class ChatAreaComponent implements OnInit, OnChanges {
   file: any;
   message: any = '';
   openFileUploadDialog: boolean = false;
-  url: string = 'http://localhost:5000/';
+  url: string = 'http://localhost:5000/profile/';
 
   currentUser: IGetUsers = {
     id: '',
@@ -76,10 +76,11 @@ export class ChatAreaComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    const userdata = JSON.parse(String(localStorage.getItem('userdata')));
+    const id = String(localStorage.getItem('id'));
 
     const message = {
-      from: userdata.id,
+      file: '',
+      from: id,
       message: this.message,
       chatId: this.currentChat.id,
       combinedUserIds: this.currentChat.combinedUserIds,
@@ -102,8 +103,6 @@ export class ChatAreaComponent implements OnInit, OnChanges {
 
     if (file) this.file = file[0];
     if (file) this.openFileUploadDialog = !this.openFileUploadDialog;
-
-    console.log(file);
   }
 
   onCancelUpload() {

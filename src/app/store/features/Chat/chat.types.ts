@@ -18,5 +18,6 @@ export interface IMessages {
   chatDataId: string;
   from: string;
   time: string;
+  file: string;
   message: string;
 }

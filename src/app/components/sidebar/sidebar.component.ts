@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   buttons: Array<IIcons> | undefined;
   user: ICreateUser | null | undefined;
   hide: boolean = false;
-  url: string = 'http://localhost:5000/';
+  url: string = 'http://localhost:5000/profile/';
 
   constructor(
     private siderbarService: SiderbarService,

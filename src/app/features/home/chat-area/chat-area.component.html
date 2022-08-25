@@ -64,11 +64,19 @@
   <footer
     class="bg-white z-10 w-full flex flex-row items-end p-2 gap-3 flex-shrink-0"
   >
-    <span
-      class="iconify text-2xl text-[#9C9C9C]"
-      data-icon="iconoir:attachment"
-      data-flip="horizontal,vertical"
-    ></span>
+    <label for="fileUpload">
+      <input
+        id="fileUpload"
+        type="file"
+        class="hidden"
+        (change)="onChange($event)"
+      />
+      <span
+        class="iconify text-2xl text-[#9C9C9C] hover:cursor-pointer"
+        data-icon="iconoir:attachment"
+        data-flip="horizontal,vertical"
+      ></span>
+    </label>
     <textarea
       type="text"
       name="message"
@@ -100,6 +108,11 @@
       </ng-template>
     </span>
   </footer>
+  <app-file-upload
+    [openFileDialog]="openFileUploadDialog"
+    [file]="file"
+    (cancelUpload)="onCancelUpload()"
+  ></app-file-upload>
 </main>
 <ng-template #nochat>
   <main

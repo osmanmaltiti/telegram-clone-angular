@@ -13,14 +13,15 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { ChatAreaComponent } from './components/home/chat-area/chat-area.component';
-import { ChatBubbleComponent } from './components/home/chat-area/chat-bubble/chat-bubble.component';
-import { ChatCardComponent } from './components/home/chat-card/chat-card.component';
-import { SidebarComponent } from './components/home/sidebar/sidebar.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { HighlightDirective } from './directives/home/highlight.directive';
 import { ScrollBottomDirective } from './directives/home/scrollToBottom.directive';
 import { ClickOutsideDirective } from './directives/shared/click-outside.directive';
 import { IconsDirective } from './directives/sidebar/Icons.directive';
+import { ChatAreaComponent } from './features/home/chat-area/chat-area.component';
+import { ChatBubbleComponent } from './features/home/chat-area/chat-bubble/chat-bubble.component';
+import { ChatCardComponent } from './features/home/chat-card/chat-card.component';
+import { SidebarComponent } from './features/home/sidebar/sidebar.component';
 import { HomeComponent } from './home/home.component';
 import { DateTransformPipe } from './pipes/date.pipe';
 import { SafeUrlPipe } from './pipes/image.pipe';
@@ -50,6 +51,7 @@ const config: SocketIoConfig = {
     SignupComponent,
     AuthComponent,
     SafeUrlPipe,
+    FileUploadComponent,
   ],
   imports: [
     FormsModule,

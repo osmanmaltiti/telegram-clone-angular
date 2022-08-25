@@ -1,0 +1,36 @@
+<main
+  *ngIf="open"
+  class="w-full h-full fixed bg-[#00000046] top-0 left-0 z-30 grid"
+>
+  <div
+    class="w-[350px] h-[500px] p-4 bg-white rounded-lg m-auto flex flex-col justify-around"
+  >
+    <div class="w-full h-[70%]">
+      <img
+        alt=""
+        [src]="imageUrl | safeResourceUrl"
+        class="object-cover w-full h-full"
+      />
+    </div>
+    <span class="flex flex-col relative w-full">
+      <input
+        class="w-full border-b-2 border-gray-300 focus:border-sky-500 focus:outline-none py-2"
+        placeholder="Caption"
+        [(ngModel)]="caption"
+      />
+      <span
+        class="iconify text-3xl text-[#9C9C9C] right-0 absolute top-1/2 -translate-y-1/2"
+        data-icon="fluent:emoji-16-regular"
+      ></span>
+    </span>
+    <div class="flex flex-row justify-between text-sky-500 font-medium">
+      <button class="hover:bg-gray-200 p-1">Add</button>
+      <span class="flex flex-row gap-4">
+        <button class="hover:bg-gray-200 p-1" (click)="onCancel()">
+          Cancel
+        </button>
+        <button class="hover:bg-gray-200 p-1" (click)="onSubmit()">Send</button>
+      </span>
+    </div>
+  </div>
+</main>

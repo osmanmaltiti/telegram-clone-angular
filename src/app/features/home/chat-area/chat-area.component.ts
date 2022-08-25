@@ -25,7 +25,9 @@ export class ChatAreaComponent implements OnInit, OnChanges {
   @Output('close') close: EventEmitter<any> = new EventEmitter();
   @Input('open') open: boolean = false;
 
+  file: any;
   message: any = '';
+  openFileUploadDialog: boolean = false;
   url: string = 'http://localhost:5000/';
 
   currentUser: IGetUsers = {
@@ -93,5 +95,19 @@ export class ChatAreaComponent implements OnInit, OnChanges {
   onClose() {
     this.store.dispatch(setReferee({ payload: null }));
     this.close.emit();
+  }
+
+  onChange(event: Event) {
+    const file = (<HTMLInputElement>event.target).files;
+
+    if (file) this.file = file[0];
+    if (file) this.openFileUploadDialog = !this.openFileUploadDialog;
+
+    console.log(file);
+  }
+
+  onCancelUpload() {
+    this.openFileUploadDialog = false;
+    this.file = '';
   }
 }

@@ -7,6 +7,7 @@ import { setReferee } from 'src/app/store/features/Users/user.action';
 import { IGetUsers } from 'src/app/store/features/Users/user.types';
 import { RootState } from 'src/app/store/store';
 import { OpenChat } from './service/mutation.service';
+import { QueryService } from './service/query.service';
 
 @Component({
   selector: 'app-chat-card',
@@ -23,21 +24,46 @@ export class ChatCardComponent implements OnInit {
     number: 0,
   };
 
+  lastMessage: any = {
+    message: '',
+    file: '',
+    from: '',
+    time: 0,
+  };
+
   url: string = 'http://localhost:5000/profile/';
+  postUrl: string = 'http://localhost:5000/posts/';
+  currentUser: string = '';
 
   constructor(
     private store: Store<RootState>,
     private OpenChat: OpenChat,
-    private socket: Socket
+    private socket: Socket,
+    private queryService: QueryService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const id = String(localStorage.getItem('id'));
+    this.currentUser = id;
+
+    const combinedUserIds = [this.user.id, id].sort().join(' ');
+
+    this.queryService.watch({ data: combinedUserIds }).valueChanges.subscribe({
+      next: ({ data }) => {
+        const { getLastMessage } = data as unknown as any;
+        this.lastMessage = getLastMessage;
+      },
+      error: () => {
+        return null;
+      },
+    });
+  }
 
   onOpenChat() {
-    const userdata = JSON.parse(String(localStorage.getItem('userdata')));
+    const id = String(localStorage.getItem('id'));
 
     const data = {
-      combinedUserIds: [this.user.id, userdata.id].sort().join(' '),
+      combinedUserIds: [this.user.id, id].sort().join(' '),
       refereeId: this.user.id,
     };
 

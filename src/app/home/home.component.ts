@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
           getUsers: Array<IGetUsers>;
           user: ICreateUser;
         };
+
         this.store.dispatch(fetchUsers({ payload: getUsers }));
         this.store.dispatch(setUser({ payload: user }));
       },

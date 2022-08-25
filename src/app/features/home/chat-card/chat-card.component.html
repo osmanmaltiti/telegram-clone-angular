@@ -25,27 +25,45 @@
         [user]="user"
         class="text-gray-400"
       >
-        10:00AM
+        {{ lastMessage.time | date: "shortTime" }}
       </p>
     </div>
 
     <div class="w-full flex flex-row justify-between items-center text-sm">
-      <p
-        class="whitespace-nowrap text-ellipsis overflow-hidden max-w-[30ch] text-gray-400"
-        [appHighlight]="''"
-        [text-color]="'white'"
-        [user]="user"
-      >
-        some random ass text
-      </p>
-      <p
-        class="bg-gray-400 w-5 h-5 rounded-full text-center leading-5 text-white font-medium text-xs"
-        [appHighlight]="'white'"
-        [text-color]="'#419FD9'"
-        [user]="user"
-      >
-        2
-      </p>
+      <span class="flex flex-row gap-1 justify-center items-center">
+        <img
+          alt=""
+          class="h-4 w-4 rounded-sm object-cover"
+          *ngIf="lastMessage.file !== ''"
+          [src]="postUrl + lastMessage.file"
+        />
+        <p
+          class="whitespace-nowrap text-ellipsis overflow-hidden max-w-[30ch] text-gray-400"
+          [appHighlight]="''"
+          [text-color]="'white'"
+          [user]="user"
+          [ngClass]="{ highlight: lastMessage.from !== currentUser }"
+        >
+          {{ lastMessage.message }}
+        </p>
+      </span>
+      <div *ngIf="lastMessage.from === currentUser; else noti">
+        <span
+          class="iconify text-xl mt-auto text-[#9BCD7C]"
+          data-icon="bi:check-all"
+        ></span>
+      </div>
+      <ng-template #noti>
+        <p
+          *ngIf="lastMessage.from !== ''"
+          class="bg-gray-400 w-5 h-5 rounded-full text-center leading-5 text-white font-medium text-xs"
+          [appHighlight]="'white'"
+          [text-color]="'#419FD9'"
+          [user]="user"
+        >
+          1
+        </p>
+      </ng-template>
     </div>
   </div>
 </button>

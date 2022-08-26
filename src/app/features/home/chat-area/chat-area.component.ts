@@ -67,11 +67,27 @@ export class ChatAreaComponent implements OnInit, OnChanges {
     });
 
     this.socket.fromEvent('update').subscribe({
-      next: (value: any) => (this.currentChat = value),
+      next: (value: any) => {
+        const { chat, lastMessage } = value as unknown as {
+          chat: any;
+          lastMessage: any;
+        };
+
+        this.updateChat.emit({ lastMessage });
+        this.currentChat = chat;
+      },
     });
 
     this.socket.fromEvent('broadcast_update').subscribe({
-      next: (value: any) => (this.currentChat = value),
+      next: (value: any) => {
+        const { chat, lastMessage } = value as unknown as {
+          chat: any;
+          lastMessage: any;
+        };
+
+        this.updateChat.emit({ lastMessage });
+        this.currentChat = chat;
+      },
     });
   }
 
@@ -86,9 +102,7 @@ export class ChatAreaComponent implements OnInit, OnChanges {
       combinedUserIds: this.currentChat.combinedUserIds,
     };
 
-    this.mutationService.mutate({ message }).subscribe({
-      next: () => {},
-    });
+    this.mutationService.mutate({ message }).subscribe();
 
     this.message = '';
   }

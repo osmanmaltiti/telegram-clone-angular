@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
 import { setCurrentChat } from 'src/app/store/features/Chat/chat.action';
@@ -14,8 +22,9 @@ import { QueryService } from './service/query.service';
   templateUrl: './chat-card.component.html',
   styleUrls: ['./chat-card.component.css'],
 })
-export class ChatCardComponent implements OnInit {
+export class ChatCardComponent implements OnInit, OnChanges {
   @Output('open-chat') openChat: EventEmitter<any> = new EventEmitter();
+  @Input('lastMessage') updateLastMessage: any;
 
   @Input('user') user: IGetUsers = {
     profile: '',
@@ -31,32 +40,29 @@ export class ChatCardComponent implements OnInit {
     time: 0,
   };
 
-  url: string = 'http://localhost:5000/profile/';
   postUrl: string = 'http://localhost:5000/posts/';
+  url: string = 'http://localhost:5000/profile/';
   currentUser: string = '';
 
   constructor(
+    private queryService: QueryService,
     private store: Store<RootState>,
     private OpenChat: OpenChat,
-    private socket: Socket,
-    private queryService: QueryService
+    private socket: Socket
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['updateLastMessage'].currentValue) {
+      const update = changes['updateLastMessage'].currentValue;
+      const refereeId = update.chatData.chat.user.id;
+
+      if (refereeId === this.user.id)
+        this.lastMessage = changes['updateLastMessage'].currentValue;
+    }
+  }
+
   ngOnInit(): void {
-    const id = String(localStorage.getItem('id'));
-    this.currentUser = id;
-
-    const combinedUserIds = [this.user.id, id].sort().join(' ');
-
-    this.queryService.watch({ data: combinedUserIds }).valueChanges.subscribe({
-      next: ({ data }) => {
-        const { getLastMessage } = data as unknown as any;
-        this.lastMessage = getLastMessage;
-      },
-      error: () => {
-        return null;
-      },
-    });
+    this.onLastMessage();
   }
 
   onOpenChat() {
@@ -79,5 +85,24 @@ export class ChatCardComponent implements OnInit {
         this.store.dispatch(setCurrentChat({ payload: openChat }));
       },
     });
+  }
+
+  onLastMessage() {
+    const id = String(localStorage.getItem('id'));
+    this.currentUser = id;
+
+    const combinedUserIds = [this.user.id, id].sort().join(' ');
+
+    this.queryService.watch({ data: combinedUserIds }).valueChanges.subscribe({
+      next: ({ data }) => {
+        const { getLastMessage } = data as unknown as any;
+        this.lastMessage = getLastMessage;
+      },
+      error: () => {
+        return null;
+      },
+    });
+
+    this.updateLastMessage = false;
   }
 }

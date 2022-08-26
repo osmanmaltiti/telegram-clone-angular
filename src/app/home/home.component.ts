@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   openAside: boolean = false;
   openChat: boolean = false;
   allUsers: Array<IGetUsers> = [];
+  updateLastMessage: any;
 
   constructor(private apollo: QueryService, private store: Store<RootState>) {}
 
@@ -33,7 +34,9 @@ export class HomeComponent implements OnInit {
           user: ICreateUser;
         };
 
-        this.store.dispatch(fetchUsers({ payload: getUsers }));
+        const newUsers = getUsers.filter((user) => user.id !== id);
+
+        this.store.dispatch(fetchUsers({ payload: newUsers }));
         this.store.dispatch(setUser({ payload: user }));
       },
       error: (err) => {
@@ -58,8 +61,7 @@ export class HomeComponent implements OnInit {
     this.openChat = !this.openChat;
   }
 
-  onUpdateChat() {
-    this.getUsers();
-    this.getChats();
+  onUpdateChat(event: any) {
+    this.updateLastMessage = event.lastMessage;
   }
 }

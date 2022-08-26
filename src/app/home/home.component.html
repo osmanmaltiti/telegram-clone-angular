@@ -25,6 +25,7 @@
     <app-chat-card
       *ngFor="let user of allUsers"
       [user]="user"
+      [lastMessage]="updateLastMessage"
       (open-chat)="toggleChat()"
     ></app-chat-card>
   </div>
@@ -32,6 +33,6 @@
     class="flex-grow"
     [open]="openChat"
     (close)="toggleChat()"
-    (updateChat)="onUpdateChat()"
+    (updateChat)="onUpdateChat($event)"
   ></app-chat-area>
 </main>

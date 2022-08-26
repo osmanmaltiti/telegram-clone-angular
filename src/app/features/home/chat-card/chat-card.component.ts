@@ -40,6 +40,14 @@ export class ChatCardComponent implements OnInit, OnChanges {
     time: 0,
   };
 
+  currentChat: ICurrentChat = {
+    id: '',
+    refereeId: '',
+    combinedUserIds: '',
+    __typename: '',
+    data: [],
+  };
+
   postUrl: string = 'http://localhost:5000/posts/';
   url: string = 'http://localhost:5000/profile/';
   currentUser: string = '';
@@ -52,17 +60,17 @@ export class ChatCardComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['updateLastMessage'].currentValue) {
-      const update = changes['updateLastMessage'].currentValue;
-      const refereeId = update.chatData.chat.user.id;
-
-      if (refereeId === this.user.id)
-        this.lastMessage = changes['updateLastMessage'].currentValue;
-    }
+    if (changes['updateLastMessage'].currentValue) this.onLastMessage();
   }
 
   ngOnInit(): void {
     this.onLastMessage();
+
+    this.store.select('ChatReducer').subscribe({
+      next: (value) => {
+        if (value.currentChat) this.currentChat = value.currentChat;
+      },
+    });
   }
 
   onOpenChat() {
@@ -93,15 +101,18 @@ export class ChatCardComponent implements OnInit, OnChanges {
 
     const combinedUserIds = [this.user.id, id].sort().join(' ');
 
-    this.queryService.watch({ data: combinedUserIds }).valueChanges.subscribe({
-      next: ({ data }) => {
-        const { getLastMessage } = data as unknown as any;
-        this.lastMessage = getLastMessage;
-      },
-      error: () => {
-        return null;
-      },
-    });
+    this.queryService
+      .watch({ data: combinedUserIds }, { fetchPolicy: 'network-only' })
+      .valueChanges.subscribe({
+        next: ({ data }) => {
+          const { getLastMessage } = data as unknown as any;
+          this.lastMessage = getLastMessage;
+          console.log(getLastMessage);
+        },
+        error: () => {
+          return null;
+        },
+      });
 
     this.updateLastMessage = false;
   }
